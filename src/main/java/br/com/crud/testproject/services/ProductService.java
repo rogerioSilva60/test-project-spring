@@ -6,7 +6,7 @@ import br.com.crud.testproject.entities.Products;
 
 public interface ProductService  {
     
-    List<Products> getAll();
+    List<Products> getAll(boolean isActive);
 
     Products getByIdAndIsActive(long id, boolean isActive);
 

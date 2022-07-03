@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,8 +49,8 @@ public class ProductController implements ProductOpenApi {
 
   @GetMapping
   @Override
-  public ResponseEntity<Response<List<ProductDto>>> getAll() {
-    List<Products> products = service.getAll();
+  public ResponseEntity<Response<List<ProductDto>>> getAll(@RequestParam boolean isActive) {
+    List<Products> products = service.getAll(isActive);
     List<ProductDto> list = genericProductToProductDto.toCollection(products, ProductDto.class);
     return ResponseEntity.ok(genericResponse.toColectionResponse(list));
   }

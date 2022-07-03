@@ -68,11 +68,6 @@ public class Products implements Serializable {
       return isActive;
   }
 
-  public void prepare(Products product) {
-    this.name = product.name;
-    this.description = product.description;
-  }
-
   @Override
   public boolean equals(Object arg0) {
       return super.equals(arg0);

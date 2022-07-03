@@ -13,8 +13,8 @@ public interface ProductOpenApi {
   //   @ApiResponse(code = 400, message = "Missing or invalid request body"),
   //   @ApiResponse(code = 500, message = "Internal error")
   // })
-  @ApiOperation("get all products")
-  ResponseEntity<Response<List<ProductDto>>> getAll();
+  @ApiOperation("get all active or inactive products")
+  ResponseEntity<Response<List<ProductDto>>> getAll(boolean isActive);
 
   @ApiOperation("get by id product")
   ResponseEntity<Response<ProductDto>> getById(long id);
@@ -27,13 +27,13 @@ public interface ProductOpenApi {
   @ApiParam(name = "body", value = "Represents the product") 
   ProductInput input);
   
-  @ApiOperation("delete by id product")
+  @ApiOperation("delete product by id if inactive")
   ResponseEntity<Response<?>> delete(long id);
 
-  @ApiOperation("activate by id product")
+  @ApiOperation("activate by product id if inactive")
   ResponseEntity<Response<?>> active(long id);
 
-  @ApiOperation("inactive by id product")
+  @ApiOperation("inactive by product id if active")
   ResponseEntity<Response<?>> inactive(long id);
 
 }

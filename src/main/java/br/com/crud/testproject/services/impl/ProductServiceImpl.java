@@ -20,8 +20,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Products> getAll() {
-        List<Products> products = repository.findByIsActiveOrderByNameAsc(true);
+    public List<Products> getAll(boolean isActive) {
+        List<Products> products = repository.findByIsActiveOrderByNameAsc(isActive);
         return products;
     }
 
@@ -43,34 +43,43 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Products update(long id, Products product) {
         checkProductIfItExist(product.getName());
-        Products productOld = repository.findById(id)
+        return repository.findById(id)
+        .map(p -> {
+            p.setDescription(product.getDescription());
+            p.setName(product.getName());
+            return repository.saveAndFlush(p);
+        })
         .orElseThrow(
-            () -> new NotFoundException(String.format("Not found Product with id (%s)", id )));;
-        productOld.prepare(product);
-        return repository.saveAndFlush(productOld);
+            () -> new NotFoundException(String.format("Not found Product with id (%s)", id )));
     }
 
     @Transactional
     @Override
     public void delete(long id) {   
-        Products product = getByIdAndIsActive(id, true);
+        Products product = getByIdAndIsActive(id, false);
         repository.delete(product);
     }
 
     @Transactional
     @Override
     public void inactive(long id) {
-        Products product = getByIdAndIsActive(id, true);
-        product.setIsActive(false);
-        repository.saveAndFlush(product);
+        productActivation(id, true, false);
     }
 
     @Transactional
     @Override
     public void active(long id) {
-        Products product = getByIdAndIsActive(id, false);
-        product.setIsActive(true);
-        repository.saveAndFlush(product);
+        productActivation(id, false, true);
+    }
+
+    private Products productActivation(Long id, boolean isActive, boolean activate) {
+        return repository.findByIdAndIsActive(id, isActive)
+        .map(p -> {
+            p.setIsActive(activate);
+            return repository.saveAndFlush(p);
+        })
+        .orElseThrow(
+            () -> new NotFoundException(String.format("Not found Product with id (%s) in %s", id, (isActive ? "active" : "inactive"))));
     }
 
     private void checkProductIfItExist(String name) {
