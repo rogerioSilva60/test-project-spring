@@ -58,7 +58,7 @@ public class ProductController implements ProductOpenApi {
   @GetMapping("{id}")
   @Override
   public ResponseEntity<Response<ProductDto>> getById(@PathVariable long id) {
-    Products product = service.getByIdAndIsActive(id, true);
+    Products product = service.getById(id);
     var productDto = genericProductToProductDto.toObject(product, ProductDto.class);
     return ResponseEntity.ok(genericResponse.toObjectResponse(productDto));
   }

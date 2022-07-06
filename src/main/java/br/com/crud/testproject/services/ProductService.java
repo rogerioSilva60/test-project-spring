@@ -8,7 +8,7 @@ public interface ProductService  {
     
     List<Products> getAll(boolean isActive);
 
-    Products getByIdAndIsActive(long id, boolean isActive);
+    Products getById(long id);
 
     Products save(Products product);
 
