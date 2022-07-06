@@ -1,12 +1,17 @@
 package br.com.crud.testproject.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -28,9 +33,18 @@ public class Products implements Serializable {
   @Column(name = "is_active")
   private Boolean isActive = true;
 
+  @Column
+  private BigDecimal price = BigDecimal.ZERO;
+
+  @Column(name = "created_date")
+  private LocalDateTime createdDate;
+
+  @Column(name = "updated_date")
+  private LocalDateTime updatedDate;
+
   public Products() {}
 
-  public Products(long id, String name, String description) {
+  public Products(long id, String name, String description, BigDecimal price) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -68,9 +82,43 @@ public class Products implements Serializable {
       return isActive;
   }
 
+  public void setPrice(BigDecimal price) {
+      this.price = price;
+  }
+
+  public BigDecimal getPrice() {
+      return price;
+  }
+
+  public void setCreatedDate(LocalDateTime createdDate) {
+      this.createdDate = createdDate;
+  }
+
+  public LocalDateTime getCreatedDate() {
+      return createdDate;
+  }
+
+  public void setUpdatedDate(LocalDateTime updatedDate) {
+      this.updatedDate = updatedDate;
+  }
+
+  public LocalDateTime getUpdatedDate() {
+      return updatedDate;
+  }
+
+  @PrePersist
+  public void beforeSave() {
+    createdDate = updatedDate = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  public void beforeUpdate() {
+    updatedDate = LocalDateTime.now();
+  }
+
   @Override
-  public boolean equals(Object arg0) {
-      return super.equals(arg0);
+  public boolean equals(Object obj) {
+    return (!Objects.isNull(obj) && (obj instanceof Products) && this.getId() == ((Products) obj).getId());
   }
 
   @Override
