@@ -49,7 +49,9 @@ public class ProductController implements ProductOpenApi {
 
   @GetMapping
   @Override
-  public ResponseEntity<Response<List<ProductDto>>> getAll(@RequestParam boolean isActive) {
+  public ResponseEntity<Response<List<ProductDto>>> getAll(
+    @RequestParam(value = "isActive", defaultValue = "true") boolean isActive
+  ) {
     List<Products> products = service.getAll(isActive);
     List<ProductDto> list = genericProductToProductDto.toCollection(products, ProductDto.class);
     return ResponseEntity.ok(genericResponse.toColectionResponse(list));

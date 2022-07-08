@@ -48,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
             if(Objects.isNull(productOld) || productOld.getId() == p.getId()) {
                 p.setDescription(product.getDescription());
                 p.setName(product.getName());
+                p.setPrice(product.getPrice());
                 return repository.saveAndFlush(p);
             }
             throw new BusinessException("Existing product, please try with another name.");

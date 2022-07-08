@@ -14,6 +14,7 @@ public class ProductDto {
     private String name;
     private String description;
     private BigDecimal price;
+    private Boolean isActive;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime createdDate;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -49,6 +50,14 @@ public class ProductDto {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
