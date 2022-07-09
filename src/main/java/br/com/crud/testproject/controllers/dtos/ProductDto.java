@@ -20,6 +20,16 @@ public class ProductDto {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime updatedDate;
 
+    public ProductDto() {
+    }
+
+    public ProductDto(long id, String name, String description, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

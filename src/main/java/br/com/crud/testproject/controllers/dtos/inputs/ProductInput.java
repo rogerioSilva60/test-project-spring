@@ -19,7 +19,16 @@ public class ProductInput {
     private String description;
 
     @ApiModelProperty(example = "5.99")
-    private BigDecimal price;
+    private BigDecimal price = BigDecimal.ZERO;
+
+    public ProductInput() {
+    }
+
+    public ProductInput(String name, String description, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 
     public void setName(String name) {
         this.name = name;
