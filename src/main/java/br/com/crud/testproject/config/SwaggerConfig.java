@@ -34,7 +34,10 @@ public class SwaggerConfig {
             .globalResponses(HttpMethod.DELETE, globalResponse)
             .globalResponses(HttpMethod.PATCH, globalResponse)
             .useDefaultResponseMessages(false)
-            .tags(new Tag("Products", "Products"));
+            .tags(
+              new Tag("Products", "Products"),
+              new Tag("Base64", "Base64")
+            );
   }
 
   private ApiInfo apiInfo(){
